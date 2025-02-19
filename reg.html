@@ -34,7 +34,7 @@
         </form>
     </body>
 </head>-->
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <html>
 <head>
     <title>Sample Form</title>
@@ -93,4 +93,75 @@
         <input type="reset" value="Reset">
     </form>
 </body>
+</html>-->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sample Form</title>
+</head>
+<body>
+    <form>
+        <label>USERNAME:</label>
+        <input type="text" required>
+        <br>
+
+        <label>PASSWORD:</label>
+        <input type="password" required>
+        <br>
+
+        <label>Phone Number:</label>
+        <input type="tel" pattern="[0-9]{10}" placeholder="1234567890">
+        <br>
+
+        <label>Email ID:</label>
+        <input type="email" required>
+        <br>
+
+        <label>Resume:</label>
+        <input type="file">
+        <br>
+
+        <label>Hobbies:</label>
+        <input type="checkbox" id="eating"><label for="eating">Eating</label>
+        <input type="checkbox" id="sleeping"><label for="sleeping">Sleeping</label>
+        <input type="checkbox" id="playing"><label for="playing">Playing</label>
+        <br>
+
+        <label>GENDER:</label>
+        <input type="radio" name="gender" value="male" id="male"><label for="male">Male</label>
+        <input type="radio" name="gender" value="female" id="female"><label for="female">Female</label>
+        <input type="radio" name="gender" value="none" id="none"><label for="none">None</label>
+        <br>
+
+        <label>Price Range:</label>
+        <input type="range" min="0" max="100">
+        <br>
+
+        <label>Choose Background Color:</label>
+        <input type="color" id="bgColorPicker">
+        <br>
+
+        <label>Website URL:</label>
+        <input type="url" placeholder="https://example.com">
+        <br>
+
+        <label>Permanent Address:</label>
+        <textarea rows="4" cols="50"></textarea>
+        <br>
+
+        <input type="submit" value="Submit">
+        <input type="reset" value="Reset">
+    </form>
+
+    <script>
+        // Get the color picker input
+        const colorPicker = document.getElementById("bgColorPicker");
+
+        // Add an event listener to change background color when the user picks a color
+        colorPicker.addEventListener("input", function() {
+            document.body.style.backgroundColor = colorPicker.value;
+        });
+    </script>
+</body>
 </html>
+
