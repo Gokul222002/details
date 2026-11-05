@@ -20,9 +20,7 @@
         <input type='text' name='search-area' placeholder="Search your task" value="{{search_input}}">
         <input class="button" type="submit" value='Search'>
     </form>
-    {% if tasks|length > 0 %}
     <a id="add-link" href="{% url 'task-create' %}">&#x2b;</a>
-    {% endif %}
 </div>
 <div class="task-items-wrapper">
     {% for task in tasks %}
@@ -43,7 +41,11 @@
         </div>
         {% endif %}
     </div>
+    {% empty %}
+    <div style="text-align: center; padding: 30px 10px;">
+        <h3>No tasks in your list yet!</h3>
+        <p><a style="color: #EB796F; text-decoration: none; font-weight: bold;" href="{% url 'task-create' %}">+ Create a new task</a></p>
+    </div>
     {% endfor %}
 </div>
 {% endblock content %}
-

@@ -35,15 +35,28 @@
 
         .header-bar a {
             color: rgb(247, 247, 247);
+            text-decoration: none;
         }
-        .header-bar a {
-    color: rgb(247, 247, 247);
-    text-decoration: none; /* Removes the underline */
-}
 
-.header-bar a:hover {
-    text-decoration: none; /* Ensures no underline appears on hover */
-}
+        .header-bar a:hover {
+            text-decoration: underline;
+        }
+
+        .logout-btn {
+            background: transparent;
+            border: none;
+            color: rgb(247, 247, 247);
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 4px 8px;
+        }
+
+        .logout-btn:hover {
+            text-decoration: underline;
+        }
+
         .task-wrapper {
             display: flex;
             align-items: center;
