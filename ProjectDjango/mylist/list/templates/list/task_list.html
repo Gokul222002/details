@@ -2,12 +2,12 @@
 
 {% block content %}
 <div class="header-bar">
-    <div>
-        <h1>Hello, {{ request.user|title }}</h1>
-        <h3 style="margin:0">You have <i>{{ count }}</i> incomplete task{{ count|pluralize:"s" }}</h3>
+    <div style="min-width: 0; flex: 1; padding-right: 12px;">
+        <h1 style="margin: 0 0 6px 0; font-size: 20px; line-height: 1.3;">Hello, {{ request.user|title }}</h1>
+        <h3 style="margin: 0; font-size: 14px; opacity: 0.95;">You have <i>{{ count }}</i> incomplete task{{ count|pluralize:"s" }}</h3>
     </div>
     {% if request.user.is_authenticated %}
-        <form action="{% url 'logout' %}" method="post" style="display:inline;">
+        <form action="{% url 'logout' %}" method="post" style="margin: 0; flex-shrink: 0;">
             {% csrf_token %}
             <button type="submit" class="logout-btn">Logout</button>
         </form>

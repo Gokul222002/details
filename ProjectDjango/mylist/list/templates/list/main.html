@@ -14,6 +14,8 @@
 
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Raleway', sans-serif;
+            word-break: break-word;
+            overflow-wrap: anywhere;
         }
         .container {
             max-width: 550px;
@@ -27,8 +29,9 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 15px;
             color: #fff;
-            padding: 10px;
+            padding: 14px 18px;
             border-radius: 10px 10px 0 0;
             background: linear-gradient(90deg, #EEA390 0%, #EB796F 100%);
         }
@@ -43,18 +46,22 @@
         }
 
         .logout-btn {
-            background: transparent;
-            border: none;
-            color: rgb(247, 247, 247);
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            color: #fff;
             font-family: inherit;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
-            padding: 4px 8px;
+            padding: 6px 14px;
+            border-radius: 6px;
+            white-space: nowrap;
+            transition: all 0.2s ease;
         }
 
         .logout-btn:hover {
-            text-decoration: underline;
+            background-color: rgba(255, 255, 255, 0.35);
+            text-decoration: none;
         }
 
         .task-wrapper {
