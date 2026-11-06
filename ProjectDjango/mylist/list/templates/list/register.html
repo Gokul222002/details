@@ -1,19 +1,106 @@
 {% extends 'list/main.html' %}
 {% block content %}
-<div class="header-bar"><h1>Register</h1></div>
+<div class="header-bar">
+    <h1>Register</h1>
+    <a href="{% url 'login' %}">Login</a>
+</div>
 <div class="card-body">
-    <form method="POST">
+    {% if form.non_field_errors %}
+    <div class="error-alert">
+        {% for error in form.non_field_errors %}
+            <p>{{ error }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="POST" id="register-form" novalidate>
         {% csrf_token %}
-        <label>{{form.username.label}}</label>
-        {{ form.username }}
-        <label>{{form.password1.label}}</label>
-        {{ form.password1 }}
-        <label>{{form.password2.label}}</label>
-        {{ form.password2 }}
-        <input style="margin-top:10px ;" class="button" type="submit" value="Register">
+
+        <div class="form-group">
+            <label for="id_username">{{ form.username.label }}:</label>
+            {{ form.username }}
+            <small class="field-hint">Letters, digits, and @/./+/-/_ only (no spaces).</small>
+            {% if form.username.errors %}
+                <div class="field-error">
+                    {% for error in form.username.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="id_password1">{{ form.password1.label }}:</label>
+            {{ form.password1 }}
+            <small class="field-hint">Must be at least 8 characters.</small>
+            {% if form.password1.errors %}
+                <div class="field-error">
+                    {% for error in form.password1.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="id_password2">{{ form.password2.label }}:</label>
+            {{ form.password2 }}
+            <div id="password-match-error" class="field-error" style="display: none;">
+                <p>⚠️ Passwords do not match. Please ensure both passwords are identical.</p>
+            </div>
+            {% if form.password2.errors %}
+                <div class="field-error">
+                    {% for error in form.password2.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <input style="margin-top: 15px;" class="button" type="submit" id="register-btn" value="Register">
     </form>
     
-    <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+    <p style="margin-top: 20px;">Already have an account? <a href="{% url 'login' %}" style="color: #EB796F; font-weight: bold; text-decoration: none;">Login</a></p>
 </div>
-{% endblock content %}
 
+<script>
+    (function() {
+        const form = document.getElementById('register-form');
+        const pwd1 = document.getElementById('id_password1') || form.querySelector('input[name="password1"]');
+        const pwd2 = document.getElementById('id_password2') || form.querySelector('input[name="password2"]');
+        const matchError = document.getElementById('password-match-error');
+
+        function validatePasswordMatch() {
+            if (!pwd1 || !pwd2) return true;
+            const v1 = pwd1.value;
+            const v2 = pwd2.value;
+
+            // Only show error if user started typing in the second password field
+            if (v2.length > 0 && v1 !== v2) {
+                matchError.style.display = 'block';
+                pwd2.style.borderColor = '#d93025';
+                return false;
+            } else {
+                matchError.style.display = 'none';
+                pwd2.style.borderColor = '';
+                return true;
+            }
+        }
+
+        if (pwd1 && pwd2) {
+            pwd1.addEventListener('input', validatePasswordMatch);
+            pwd2.addEventListener('input', validatePasswordMatch);
+        }
+
+        form.addEventListener('submit', function(e) {
+            if (pwd1 && pwd2 && pwd1.value !== pwd2.value) {
+                e.preventDefault();
+                matchError.style.display = 'block';
+                pwd2.style.borderColor = '#d93025';
+                pwd2.focus();
+                return false;
+            }
+        });
+    })();
+</script>
+{% endblock content %}

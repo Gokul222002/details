@@ -124,10 +124,22 @@
             border-radius: 5px;
             padding: 10px;
             width: 90%;
+            box-sizing: border-box;
+            font-family: inherit;
+            font-size: 14px;
+        }
+        input[type=text]:focus,
+        input[type=password]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #EB796F;
+            box-shadow: 0 0 4px rgba(235, 121, 111, 0.5);
         }
         label {
             padding-top: 10px !important;
             display: block;
+            font-weight: 600;
+            color: #333;
         }
         .button {
             border: 1px solid #757575;
@@ -138,9 +150,69 @@
             border-radius: 5px;
             cursor: pointer;
             text-decoration: none;
+            font-weight: 600;
         }
-        .card-body{
+        .button:hover {
+            background-color: #f0f0f0;
+        }
+        .card-body {
             padding: 20px;
+        }
+
+        /* Form validation & Error styles */
+        .form-group {
+            margin-bottom: 14px;
+        }
+        .field-hint {
+            display: block;
+            font-size: 11px;
+            color: #70757a;
+            margin-top: 4px;
+        }
+        .field-error {
+            background-color: #fce8e6;
+            color: #c5221f;
+            border-left: 3px solid #d93025;
+            padding: 6px 10px;
+            margin-top: 6px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 500;
+            width: 90%;
+            box-sizing: border-box;
+        }
+        .field-error p {
+            margin: 0;
+            padding: 2px 0;
+        }
+        .error-alert {
+            background-color: #fce8e6;
+            color: #c5221f;
+            border: 1px solid #fad2cf;
+            padding: 10px 14px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .error-alert p {
+            margin: 0;
+        }
+        .errorlist {
+            list-style-type: none;
+            padding: 8px 12px;
+            margin: 8px 0;
+            background-color: #fce8e6;
+            color: #c5221f;
+            border-left: 3px solid #d93025;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 500;
+            width: 90%;
+            box-sizing: border-box;
+        }
+        .errorlist li {
+            margin: 2px 0;
         }
     </style>
 </head>

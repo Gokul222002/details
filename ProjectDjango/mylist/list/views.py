@@ -14,27 +14,27 @@ from .models import Task
 class CustomLoginView(LoginView):
     template_name = 'list/login.html'
     field = '__all__'
-    redirect_authenticated_user =True
+    redirect_authenticated_user = True
 
     def get_success_url(self):
         return reverse_lazy('tasks')
     
 class RegisterPage(FormView):
-    template_name='list/register.html'
-    form_class=UserCreationForm
-    redirect_authenticated_user =True
+    template_name = 'list/register.html'
+    form_class = UserCreationForm
+    redirect_authenticated_user = True
     success_url = reverse_lazy('tasks')
 
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('tasks')
+        return super().dispatch(request, *args, **kwargs)
+
     def form_valid(self, form):
-        user= form.save()
+        user = form.save()
         if user is not None:
-            login(self.request,user)
-        return super(RegisterPage,self).form_valid(form)
-    
-    def get(self, request, *args, **kwargs):
-        if self.request.user.is_authenticated:
-            return redirect('tasks')  # ✅ Call redirect with the correct URL name
-        return super().get(request, *args, **kwargs)  # ✅ Corrected 'get' method call
+            login(self.request, user)
+        return super().form_valid(form)
 
 class TaskList(LoginRequiredMixin, ListView):
     model = Task
@@ -45,17 +45,15 @@ class TaskList(LoginRequiredMixin, ListView):
         queryset = Task.objects.filter(user=self.request.user)
 
         if search_input:
-            queryset = queryset.filter(title__icontains=search_input)  # ✅ Ensure filtering happens here #title__startswith for finding with a starting word
+            queryset = queryset.filter(title__icontains=search_input)
 
-        return queryset  # ✅ Returning correctly filtered queryset
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['count'] = self.get_queryset().filter(complete=False).count()  
-        context['search_input'] = self.request.GET.get('search-area') or ''  # ✅ Fixed variable name
+        context['search_input'] = self.request.GET.get('search-area') or ''
         return context
-
-
 
 class TaskDetail(LoginRequiredMixin,DetailView):
     model=Task
@@ -76,8 +74,11 @@ class TaskUpdate(LoginRequiredMixin,UpdateView):
     fields =['title' , 'description' , 'complete']
     success_url = reverse_lazy('tasks')
 
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(TaskUpdate,self).form_valid(form)
+
 class TaskDelete(LoginRequiredMixin,DeleteView):
     model=Task
     context_object_name='task'
     success_url = reverse_lazy('tasks')
-
